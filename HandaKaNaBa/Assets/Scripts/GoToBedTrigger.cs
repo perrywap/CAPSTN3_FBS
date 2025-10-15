@@ -2,6 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
+using UnityEditor; 
+#endif
 
 public class GoToBedTrigger : MonoBehaviour
 {
@@ -15,17 +20,27 @@ public class GoToBedTrigger : MonoBehaviour
     [Header("Questions")]
     [SerializeField]
     private string[] questions = {
-        "Did you lock the door?",
+        "Did you lock the doors?",
         "Did you turn off the lights?",
-        "Did you close the windows?",
+        "Did you unplug electronics?",
+        "Did you check the windows?",
+        "Are you ready to go to bed?"
     };
 
     [Header("Fade Settings")]
     [SerializeField] private float fadeDuration = 2f;
 
+    [Header("Next Scene")]
+#if UNITY_EDITOR
+    [SerializeField] private SceneAsset nextScene; 
+#endif
+    private string nextSceneName;
+
     private int currentQuestion = -1;
     private bool playerInside = false;
     private bool isFading = false;
+
+    private FirstPersonController playerController;
 
     private void Start()
     {
@@ -34,13 +49,18 @@ public class GoToBedTrigger : MonoBehaviour
 
         yesButton.onClick.AddListener(OnYesPressed);
         noButton.onClick.AddListener(OnNoPressed);
+
+#if UNITY_EDITOR
+        if (nextScene != null)
+            nextSceneName = nextScene.name;
+#endif
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
+        playerController = collision.gameObject.GetComponent<FirstPersonController>();
 
-        if (player != null)
+        if (playerController != null)
         {
             playerInside = true;
             OpenFirstPrompt();
@@ -49,30 +69,29 @@ public class GoToBedTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider collision)
     {
-
-        FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
-
-        if (player != null)
+        if (playerController != null && collision.gameObject == playerController.gameObject)
         {
             playerInside = false;
             bedPanel.SetActive(false);
             currentQuestion = -1;
+            HideCursor();
+            playerController.UnlockControls();
         }
     }
 
     private void OpenFirstPrompt()
     {
-        
         bedPanel.SetActive(true);
-        questionText.text = "Go to bed?";
+        questionText.text = "Handa Ka Na Ba?";
         currentQuestion = -1;
+        ShowCursor();
+        playerController?.LockControls();
     }
 
     private void OnYesPressed()
     {
         if (currentQuestion == -1)
         {
-            // Start the question sequence
             currentQuestion = 0;
             ShowNextQuestion();
         }
@@ -88,10 +107,11 @@ public class GoToBedTrigger : MonoBehaviour
         if (currentQuestion == -1)
         {
             bedPanel.SetActive(false);
+            HideCursor();
+            playerController?.UnlockControls();
             return;
         }
 
-        // If during questions, continue to next question anyway
         currentQuestion++;
         ShowNextQuestion();
     }
@@ -104,7 +124,6 @@ public class GoToBedTrigger : MonoBehaviour
         }
         else
         {
-            // All questions done
             StartCoroutine(FadeToBlack());
         }
     }
@@ -112,6 +131,8 @@ public class GoToBedTrigger : MonoBehaviour
     private IEnumerator FadeToBlack()
     {
         bedPanel.SetActive(false);
+        HideCursor();
+        playerController?.UnlockControls();
         isFading = true;
 
         float elapsed = 0f;
@@ -127,6 +148,25 @@ public class GoToBedTrigger : MonoBehaviour
 
         Debug.Log("Player is now asleep...");
 
-        // Load Scene or Cutscene here
+        if (!string.IsNullOrEmpty(nextSceneName))
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            Debug.LogWarning("No next scene assigned in GoToBedTrigger.");
+        }
+    }
+
+    private void ShowCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void HideCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }
