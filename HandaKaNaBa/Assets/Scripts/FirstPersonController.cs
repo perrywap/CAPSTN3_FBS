@@ -1,4 +1,10 @@
+using UnityEditor.PackageManager;
 using UnityEngine;
+
+interface IIneteractable
+{
+    public void Interact();
+}
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : MonoBehaviour
@@ -14,6 +20,7 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Interaction Settings")]
     [SerializeField] private float interactRange = 3f;
+
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -72,7 +79,11 @@ public class FirstPersonController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, interactRange))
             {
-                Debug.Log("Interacted with: " + hit.collider.name);
+                if (hit.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                {
+                    interactObj.Interact();
+                    
+                }               
             }
             else
             {
