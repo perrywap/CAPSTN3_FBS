@@ -1,10 +1,10 @@
-using UnityEditor.PackageManager;
 using UnityEngine;
 
-interface IIneteractable
+interface IPlayerInteractable
 {
-    public void Interact();
+    void Interact();
 }
+
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : MonoBehaviour
@@ -21,9 +21,9 @@ public class FirstPersonController : MonoBehaviour
     [Header("Interaction Settings")]
     [SerializeField] private float interactRange = 3f;
 
-
     private CharacterController controller;
     private Vector3 velocity;
+    private bool controlsLocked = false;
 
     void Start()
     {
@@ -34,6 +34,7 @@ public class FirstPersonController : MonoBehaviour
 
     void Update()
     {
+        if (controlsLocked) return; 
         HandleMovement();
         HandleMouseLook();
         HandleInteraction();
@@ -48,9 +49,7 @@ public class FirstPersonController : MonoBehaviour
         controller.Move(move * moveSpeed * Time.deltaTime);
 
         if (controller.isGrounded && velocity.y < 0)
-        {
             velocity.y = -2f;
-        }
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
@@ -75,20 +74,26 @@ public class FirstPersonController : MonoBehaviour
             Debug.Log("Pressed E to Interact!");
 
             Ray ray = new Ray(playerCamera.position, playerCamera.forward);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, interactRange))
+            if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
             {
                 if (hit.collider.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
                     interactObj.Interact();
-                    
-                }               
+                }
             }
             else
             {
                 Debug.Log("Nothing to interact with.");
             }
         }
+    }
+    public void LockControls()
+    {
+        controlsLocked = true;
+    }
+
+    public void UnlockControls()
+    {
+        controlsLocked = false;
     }
 }
