@@ -7,6 +7,8 @@ public class RemodelInteraction : InteractableObject
 
     public override void Interact()
     {
+        if (isCompleted) return;
+
         base.Interact();
         currentGO.SetActive(false);
         newGO.SetActive(true);
