@@ -36,18 +36,23 @@ public class GoToBedTrigger : MonoBehaviour
         noButton.onClick.AddListener(OnNoPressed);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (other.CompareTag("Player") && !isFading)
+        FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
+
+        if (player != null)
         {
             playerInside = true;
             OpenFirstPrompt();
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider collision)
     {
-        if (other.CompareTag("Player"))
+
+        FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
+
+        if (player != null)
         {
             playerInside = false;
             bedPanel.SetActive(false);
@@ -57,6 +62,7 @@ public class GoToBedTrigger : MonoBehaviour
 
     private void OpenFirstPrompt()
     {
+        
         bedPanel.SetActive(true);
         questionText.text = "Go to bed?";
         currentQuestion = -1;
