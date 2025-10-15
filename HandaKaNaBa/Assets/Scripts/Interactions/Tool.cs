@@ -1,41 +1,35 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class InteractableObject : MonoBehaviour, IInteractable  
+public class Tool : MonoBehaviour, IInteractable
 {
-    [Header("TASK SETTINGS")]
-    public string taskName;
-    public bool isCompleted;
-
-    [Header("INTERACTION SETTINGS")]
+    public string toolName;
+    public Sprite icon;
     public GameObject interactTxt;
 
-
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        isCompleted = false;
-        TaskManager.Instance.RegisterTask(this.gameObject);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isCompleted)
-            interactTxt.SetActive(false);
+        
     }
 
     public virtual void Interact()
     {
         Debug.Log("Interacted with: " + this.name);
-        CompleteTask();
-    }
 
-    public virtual void CompleteTask()
-    {
-        if (isCompleted) return;
+        GameObject toolGO = Instantiate(this.gameObject);
+        toolGO.transform.SetParent(InventoryManager.Instance.transform);
+        toolGO.SetActive(false);
 
-        isCompleted = true;
-        Debug.Log($"{taskName} completed!");
-        TaskManager.Instance.CheckAllTasks();
+        InventoryManager.Instance.tools.Add(toolGO.GetComponent<Tool>());
+        Destroy(this.gameObject);
+        
     }
 
     private void OnTriggerStay(Collider collision)
@@ -52,7 +46,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
 
     public void OnTriggerEnter(Collider collision)
     {
-        
+
     }
 
     public void OnTriggerExit(Collider collision)

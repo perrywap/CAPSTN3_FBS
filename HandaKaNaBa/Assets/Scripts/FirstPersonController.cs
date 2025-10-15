@@ -1,6 +1,6 @@
 using UnityEngine;
 
-interface IPlayerInteractable
+interface IInteractable
 {
     void Interact();
 }

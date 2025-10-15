@@ -1,9 +1,9 @@
 using UnityEngine;
 
-interface IInteractable
-{
-    public void Interact();
-}
+//interface IInteractable
+//{
+//    public void Interact();
+//}
 
 public class Interactor : MonoBehaviour
 {
