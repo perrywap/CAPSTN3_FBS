@@ -4,10 +4,6 @@ using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-#if UNITY_EDITOR
-using UnityEditor; 
-#endif
-
 public class GoToBedTrigger : MonoBehaviour
 {
     [Header("UI Elements")]
@@ -15,7 +11,6 @@ public class GoToBedTrigger : MonoBehaviour
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
-    [SerializeField] private Image fadeOverlay;
 
     [Header("Questions")]
     [SerializeField]
@@ -27,33 +22,24 @@ public class GoToBedTrigger : MonoBehaviour
         "Are you ready to go to bed?"
     };
 
-    [Header("Fade Settings")]
-    [SerializeField] private float fadeDuration = 2f;
+    [Header("Scenes")]
+    [Tooltip("Name of the next scene to load if successful.")]
+    [SerializeField] private string nextSceneName;
 
-    [Header("Next Scene")]
-#if UNITY_EDITOR
-    [SerializeField] private SceneAsset nextScene; 
-#endif
-    private string nextSceneName;
+    [Tooltip("Name of the scene or state to show if the player fails.")]
+    [SerializeField] private string failedSceneName;
 
     private int currentQuestion = -1;
     private bool playerInside = false;
-    private bool isFading = false;
 
     private FirstPersonController playerController;
 
     private void Start()
     {
         bedPanel.SetActive(false);
-        fadeOverlay.color = new Color(0, 0, 0, 0);
 
         yesButton.onClick.AddListener(OnYesPressed);
         noButton.onClick.AddListener(OnNoPressed);
-
-#if UNITY_EDITOR
-        if (nextScene != null)
-            nextSceneName = nextScene.name;
-#endif
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -106,14 +92,11 @@ public class GoToBedTrigger : MonoBehaviour
     {
         if (currentQuestion == -1)
         {
-            bedPanel.SetActive(false);
-            HideCursor();
-            playerController?.UnlockControls();
+            FailSequence("You weren’t ready to go to bed.");
             return;
         }
 
-        currentQuestion++;
-        ShowNextQuestion();
+        FailSequence("You missed some preparations!");
     }
 
     private void ShowNextQuestion()
@@ -124,37 +107,61 @@ public class GoToBedTrigger : MonoBehaviour
         }
         else
         {
-            StartCoroutine(FadeToBlack());
+            CheckPreparedness();
         }
     }
 
-    private IEnumerator FadeToBlack()
+    private void CheckPreparedness()
     {
         bedPanel.SetActive(false);
         HideCursor();
         playerController?.UnlockControls();
-        isFading = true;
 
-        float elapsed = 0f;
-        Color color = fadeOverlay.color;
-
-        while (elapsed < fadeDuration)
+        if (TaskManager.Instance == null)
         {
-            elapsed += Time.deltaTime;
-            float alpha = Mathf.Clamp01(elapsed / fadeDuration);
-            fadeOverlay.color = new Color(color.r, color.g, color.b, alpha);
-            yield return null;
+            Debug.LogWarning("TaskManager not found in scene.");
+            return;
         }
 
-        Debug.Log("Player is now asleep...");
+        TaskManager.Instance.CheckAllTasks();
 
+        if (TaskManager.Instance.allTasksCompleted)
+        {
+            Debug.Log("? All tasks completed — going to bed safely.");
+            GoToNextScene();
+        }
+        else
+        {
+            Debug.Log("? Not all tasks are completed — fail.");
+            FailSequence("You forgot to finish some preparations!");
+        }
+    }
+
+    private void GoToNextScene()
+    {
         if (!string.IsNullOrEmpty(nextSceneName))
         {
             SceneManager.LoadScene(nextSceneName);
         }
         else
         {
-            Debug.LogWarning("No next scene assigned in GoToBedTrigger.");
+            Debug.LogWarning("Next scene not assigned in GoToBedTrigger!");
+        }
+    }
+
+    private void FailSequence(string message)
+    {
+        Debug.Log($"FAILED: {message}");
+        HideCursor();
+        playerController?.UnlockControls();
+
+        if (!string.IsNullOrEmpty(failedSceneName))
+        {
+            SceneManager.LoadScene(failedSceneName);
+        }
+        else
+        {
+            Debug.LogWarning("Failed scene not assigned — staying in current scene.");
         }
     }
 
