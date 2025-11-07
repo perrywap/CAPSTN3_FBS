@@ -4,6 +4,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
 {
     [Header("TASK SETTINGS")]
     public string taskName;
+    public bool isTaskObject;
     public bool isCompleted;
 
     [Header("INTERACTION SETTINGS")]
@@ -13,7 +14,8 @@ public class InteractableObject : MonoBehaviour, IInteractable
     void Start()
     {
         isCompleted = false;
-        TaskManager.Instance.RegisterTask(this.gameObject);
+        if(isTaskObject)
+            TaskManager.Instance.RegisterTask(this.gameObject);
     }
 
     // Update is called once per frame
@@ -32,6 +34,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public virtual void CompleteTask()
     {
         if (isCompleted) return;
+        if (!isTaskObject) return;
 
         isCompleted = true;
         Debug.Log($"{taskName} completed!");
@@ -45,6 +48,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
         if (player != null)
         {
             //if (isCompleted) return;
+            if (interactTxt == null) return;
 
             interactTxt.SetActive(true);
         }
@@ -61,6 +65,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
 
         if (player != null)
         {
+            if (interactTxt == null) return;
             interactTxt.SetActive(false);
         }
     }
