@@ -5,8 +5,8 @@ interface IInteractable
     void Interact();
 }
 
-
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(AudioSource))]
 public class FirstPersonController : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -21,23 +21,33 @@ public class FirstPersonController : MonoBehaviour
     [Header("Interaction Settings")]
     [SerializeField] private float interactRange = 3f;
 
+    [Header("Footstep Settings")]
+    [SerializeField] private AudioClip[] footstepClips;
+    [SerializeField] private float footstepInterval = 0.45f;
+
     private CharacterController controller;
+    private AudioSource audioSource;
     private Vector3 velocity;
     private bool controlsLocked = false;
+    private float stepTimer = 0f;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
-        if (controlsLocked) return; 
+        if (controlsLocked) return;
+
         HandleMovement();
         HandleMouseLook();
         HandleInteraction();
+        HandleFootsteps();
     }
 
     void HandleMovement()
@@ -50,7 +60,6 @@ public class FirstPersonController : MonoBehaviour
 
         if (controller.isGrounded && velocity.y < 0)
             velocity.y = -2f;
-
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
@@ -71,8 +80,6 @@ public class FirstPersonController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Pressed E to Interact!");
-
             Ray ray = new Ray(playerCamera.position, playerCamera.forward);
             if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
             {
@@ -81,12 +88,39 @@ public class FirstPersonController : MonoBehaviour
                     interactObj.Interact();
                 }
             }
-            else
-            {
-                Debug.Log("Nothing to interact with.");
-            }
         }
     }
+
+    void HandleFootsteps()
+    {
+        bool isMoving = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f ||
+                        Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
+
+        if (isMoving)
+        {
+            stepTimer += Time.deltaTime;
+
+            if (stepTimer >= footstepInterval)
+            {
+                PlayFootstep();
+                stepTimer = 0f;
+            }
+        }
+        else
+        {
+            stepTimer = 0f;
+        }
+    }
+
+    void PlayFootstep()
+    {
+        if (footstepClips.Length == 0 || audioSource == null) return;
+
+        AudioClip clip = footstepClips[Random.Range(0, footstepClips.Length)];
+        audioSource.pitch = Random.Range(0.9f, 1.1f);
+        audioSource.PlayOneShot(clip);
+    }
+
     public void LockControls()
     {
         controlsLocked = true;
