@@ -10,6 +10,9 @@ public class InteractableObject : MonoBehaviour, IInteractable
     [Header("INTERACTION SETTINGS")]
     public GameObject interactTxt;
 
+    [Header("SFX SETTINGS")]
+    public AudioSource src;
+    public AudioClip clip;
 
     void Start()
     {
@@ -29,8 +32,17 @@ public class InteractableObject : MonoBehaviour, IInteractable
     {
         Debug.Log("Interacted with: " + this.name);
         CompleteTask();
+        PlaySound();
     }
 
+    protected void PlaySound()
+    {
+        // If object doesn't need sfx, return
+        if (src == null || clip == null) return;
+
+        src.clip = clip;
+        src.Play();
+    }
     public virtual void CompleteTask()
     {
         if (isCompleted) return;
