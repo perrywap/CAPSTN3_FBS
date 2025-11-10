@@ -26,20 +26,29 @@ public class GoToBedTrigger : MonoBehaviour
     [Tooltip("Name of the next scene to load if successful.")]
     [SerializeField] private string nextSceneName;
 
-    [Tooltip("Name of the scene or state to show if the player fails.")]
+    [Tooltip("Name of the scene to load if failed.")]
     [SerializeField] private string failedSceneName;
 
     private int currentQuestion = -1;
     private bool playerInside = false;
+    private bool answeredNo = false; // Track if player answered “No” at least once
 
     private FirstPersonController playerController;
 
     private void Start()
     {
         bedPanel.SetActive(false);
-
         yesButton.onClick.AddListener(OnYesPressed);
         noButton.onClick.AddListener(OnNoPressed);
+    }
+
+    private void Update()
+    {
+        // Only open prompt when inside the trigger and E is pressed
+        if (playerInside && Input.GetKeyDown(KeyCode.E))
+        {
+            OpenFirstPrompt();
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -49,7 +58,6 @@ public class GoToBedTrigger : MonoBehaviour
         if (playerController != null)
         {
             playerInside = true;
-            OpenFirstPrompt();
         }
     }
 
@@ -60,6 +68,7 @@ public class GoToBedTrigger : MonoBehaviour
             playerInside = false;
             bedPanel.SetActive(false);
             currentQuestion = -1;
+            answeredNo = false;
             HideCursor();
             playerController.UnlockControls();
         }
@@ -70,6 +79,7 @@ public class GoToBedTrigger : MonoBehaviour
         bedPanel.SetActive(true);
         questionText.text = "Handa Ka Na Ba?";
         currentQuestion = -1;
+        answeredNo = false;
         ShowCursor();
         playerController?.LockControls();
     }
@@ -79,24 +89,30 @@ public class GoToBedTrigger : MonoBehaviour
         if (currentQuestion == -1)
         {
             currentQuestion = 0;
-            ShowNextQuestion();
         }
         else
         {
             currentQuestion++;
-            ShowNextQuestion();
         }
+
+        ShowNextQuestion();
     }
 
     private void OnNoPressed()
     {
+        // Mark that the player answered “No” at least once, but continue through questions
+        answeredNo = true;
+
         if (currentQuestion == -1)
         {
-            FailSequence("You weren’t ready to go to bed.");
-            return;
+            currentQuestion = 0;
+        }
+        else
+        {
+            currentQuestion++;
         }
 
-        FailSequence("You missed some preparations!");
+        ShowNextQuestion();
     }
 
     private void ShowNextQuestion()
@@ -119,21 +135,22 @@ public class GoToBedTrigger : MonoBehaviour
 
         if (TaskManager.Instance == null)
         {
-            Debug.LogWarning("TaskManager not found in scene.");
+            Debug.LogWarning("? TaskManager not found in scene.");
             return;
         }
 
         TaskManager.Instance.CheckAllTasks();
 
-        if (TaskManager.Instance.allTasksCompleted)
+        // If any “No” was pressed OR tasks are incomplete ? fail
+        if (answeredNo || !TaskManager.Instance.allTasksCompleted)
         {
-            Debug.Log("? All tasks completed — going to bed safely.");
-            GoToNextScene();
+            Debug.Log("? Failed: Either missed some tasks or answered 'No'.");
+            FailSequence("You weren’t fully prepared for the typhoon.");
         }
         else
         {
-            Debug.Log("? Not all tasks are completed — fail.");
-            FailSequence("You forgot to finish some preparations!");
+            Debug.Log("? Success: All tasks done and all answers were 'Yes'.");
+            GoToNextScene();
         }
     }
 
@@ -145,7 +162,7 @@ public class GoToBedTrigger : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Next scene not assigned in GoToBedTrigger!");
+            Debug.LogWarning("? No next scene assigned in GoToBedTrigger!");
         }
     }
 
@@ -161,7 +178,7 @@ public class GoToBedTrigger : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Failed scene not assigned — staying in current scene.");
+            Debug.LogWarning("? Failed scene not assigned — staying in current scene.");
         }
     }
 
