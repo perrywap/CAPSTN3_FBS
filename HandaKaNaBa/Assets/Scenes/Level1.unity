@@ -522,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c3042f3a0727042b8562b9524d62ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NeedToolInteraction
+  taskType: 0
   taskName: Use Hammer
   isTaskObject: 0
   isCompleted: 0
@@ -704,6 +705,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 505318800}
     - target: {fileID: 5842375284287571484, guid: c7ae4da081950294885cc168f455d4ad, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842375284287571484, guid: c7ae4da081950294885cc168f455d4ad, type: 3}
       propertyPath: nextScene
       value: 
       objectReference: {fileID: 102900000, guid: 6ae139e997371cb4597b24f08a8dbf27, type: 3}
@@ -747,10 +752,24 @@ PrefabInstance:
       propertyPath: 'questions.Array.data[4]'
       value: Are you ready to go to bed?
       objectReference: {fileID: 0}
+    - target: {fileID: 7251286707503305553, guid: c7ae4da081950294885cc168f455d4ad, type: 3}
+      propertyPath: m_Size.z
+      value: 0.79283243
+      objectReference: {fileID: 0}
+    - target: {fileID: 7251286707503305553, guid: c7ae4da081950294885cc168f455d4ad, type: 3}
+      propertyPath: m_Center.z
+      value: 0.09363224
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5503243343186308663, guid: c7ae4da081950294885cc168f455d4ad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 493894886}
+    - targetCorrespondingSourceObject: {fileID: 5503243343186308663, guid: c7ae4da081950294885cc168f455d4ad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 493894887}
   m_SourcePrefab: {fileID: 100100000, guid: c7ae4da081950294885cc168f455d4ad, type: 3}
 --- !u!1001 &70319587
 PrefabInstance:
@@ -4098,6 +4117,48 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7820966531781446259, guid: d50d53d72290db1489bdf87bb8748898, type: 3}
   m_PrefabInstance: {fileID: 490499525}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &493894880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5503243343186308663, guid: c7ae4da081950294885cc168f455d4ad, type: 3}
+  m_PrefabInstance: {fileID: 66400692}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &493894886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493894880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f68d906bba5ef90438c61276c971cbe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndOfDayManager
+  questions:
+  - taskType: 1
+    question: Did you lock all doors?
+  - taskType: 2
+    question: Did you lock all windows?
+  - taskType: 3
+    question: Did you prepare your emergency kit?
+  questionUI: {fileID: 1936488581}
+  questionText: {fileID: 453154029}
+  nextSceneName: Level2
+  failedSceneName: Level1
+--- !u!114 &493894887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493894880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b918b9d35f5d2ed46a5bb432d667ee70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndOfDayTrigger
+  endOfDayManager: {fileID: 493894886}
+  playerTag: Player
 --- !u!1 &497170349
 GameObject:
   m_ObjectHideFlags: 0
@@ -4594,6 +4655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6047fd16d63304e439f89f54b75271c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
+  taskType: 0
   taskName: 
   isTaskObject: 0
   isCompleted: 0
@@ -7601,7 +7663,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.521, y: 0.943, z: 0.586}
-  m_LocalScale: {x: 0.35, y: 0.5, z: 0.35}
+  m_LocalScale: {x: 0.25, y: 0.5, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 216825167}
@@ -8257,6 +8319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af81e0d6629b534098261781779213a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EmergencyKit
+  taskType: 3
   taskName: Prepare Emergency kit
   isTaskObject: 1
   isCompleted: 0
@@ -8268,7 +8331,6 @@ MonoBehaviour:
   - {fileID: 7233818927618426795, guid: cabce4262f7b96f4fa804b7f86317975, type: 3}
   - {fileID: 2213013581654401720, guid: 5d5552d4e7a1a244a9125d209f5af29d, type: 3}
   - {fileID: 1507850014083822376, guid: b472716d249839a468c3d79a667407dd, type: 3}
-  - {fileID: 7233818927618426795, guid: cabce4262f7b96f4fa804b7f86317975, type: 3}
   toolsDeposited: []
 --- !u!1001 &1064425331
 PrefabInstance:
@@ -13575,6 +13637,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7169247201424286298, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7169247201424286298, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7169247201424286298, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 493894886}
+    - target: {fileID: 7169247201424286298, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7169247201424286298, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnAnswerNo
+      objectReference: {fileID: 0}
+    - target: {fileID: 7169247201424286298, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EndOfDayManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7169247201424286298, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7438438845682076244, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0619
@@ -13586,6 +13676,34 @@ PrefabInstance:
     - target: {fileID: 7438438845682076244, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.0619
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199362252097013770, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199362252097013770, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199362252097013770, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 493894886}
+    - target: {fileID: 8199362252097013770, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199362252097013770, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnAnswerYes
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199362252097013770, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EndOfDayManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199362252097013770, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8855316940507819683, guid: f6181b09b87ef8144a7ceae46795dd49, type: 3}
       propertyPath: m_RenderMode
@@ -14107,7 +14225,7 @@ Transform:
   m_GameObject: {fileID: 2000114643}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1273409, y: -0.000000059604645, z: 0}
+  m_LocalPosition: {x: -0.17827725, y: -0.000000059604645, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15109,6 +15227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1277a0ff45414b4eb31798a099b6182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RemodelInteraction
+  taskType: 1
   taskName: Lock door
   isTaskObject: 1
   isCompleted: 0
@@ -15659,6 +15778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6047fd16d63304e439f89f54b75271c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
+  taskType: 0
   taskName: 
   isTaskObject: 0
   isCompleted: 0
@@ -16009,6 +16129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af269acc3a91a284ba819fc5eb19a3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Television
+  taskType: 0
   taskName: 
   isTaskObject: 0
   isCompleted: 0
@@ -16253,6 +16374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526cd15128cafcf43934ea42eed818bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnInteraction
+  taskType: 0
   taskName: Spawn sphere
   isTaskObject: 1
   isCompleted: 0
@@ -16745,6 +16867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 526cd15128cafcf43934ea42eed818bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnInteraction
+  taskType: 0
   taskName: Place a sphere on top
   isTaskObject: 0
   isCompleted: 0
@@ -16813,6 +16936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6047fd16d63304e439f89f54b75271c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
+  taskType: 0
   taskName: 
   isTaskObject: 0
   isCompleted: 0
@@ -17064,6 +17188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6047fd16d63304e439f89f54b75271c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
+  taskType: 0
   taskName: 
   isTaskObject: 0
   isCompleted: 0

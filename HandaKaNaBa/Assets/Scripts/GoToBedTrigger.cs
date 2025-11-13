@@ -129,29 +129,29 @@ public class GoToBedTrigger : MonoBehaviour
 
     private void CheckPreparedness()
     {
-        bedPanel.SetActive(false);
-        HideCursor();
-        playerController?.UnlockControls();
+        //bedPanel.SetActive(false);
+        //HideCursor();
+        //playerController?.UnlockControls();
 
-        if (TaskManager.Instance == null)
-        {
-            Debug.LogWarning("? TaskManager not found in scene.");
-            return;
-        }
+        //if (TaskManager.Instance == null)
+        //{
+        //    Debug.LogWarning("? TaskManager not found in scene.");
+        //    return;
+        //}
 
-        TaskManager.Instance.CheckAllTasks();
+        //TaskManager.Instance.CheckTaskProgress();
 
-        // If any “No” was pressed OR tasks are incomplete ? fail
-        if (answeredNo || !TaskManager.Instance.allTasksCompleted)
-        {
-            Debug.Log("? Failed: Either missed some tasks or answered 'No'.");
-            FailSequence("You weren’t fully prepared for the typhoon.");
-        }
-        else
-        {
-            Debug.Log("? Success: All tasks done and all answers were 'Yes'.");
-            GoToNextScene();
-        }
+        //// If any “No” was pressed OR tasks are incomplete ? fail
+        //if (answeredNo || !TaskManager.Instance.allTasksCompleted)
+        //{
+        //    Debug.Log("? Failed: Either missed some tasks or answered 'No'.");
+        //    FailSequence("You weren’t fully prepared for the typhoon.");
+        //}
+        //else
+        //{
+        //    Debug.Log("? Success: All tasks done and all answers were 'Yes'.");
+        //    GoToNextScene();
+        //}
     }
 
     private void GoToNextScene()

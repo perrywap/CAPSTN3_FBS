@@ -546,11 +546,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db582c6e844ca74c840d82b24486c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CloseWindow
+  taskType: 2
   taskName: Close window
   isTaskObject: 1
   isCompleted: 0
   interactTxt: {fileID: 4836452945163259732}
   src: {fileID: 0}
   clip: {fileID: 0}
+  interactor: {fileID: 0}
   renderer: {fileID: 0}
   glassMat: {fileID: 0}
