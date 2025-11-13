@@ -7,6 +7,7 @@ public class RemodelInteraction : InteractableObject
 
     public override void Interact()
     {
+        Debug.Log("Interacted with " + this.name);
         if (isCompleted) return;
 
         base.Interact();

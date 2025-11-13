@@ -1,6 +1,4 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
 
+    public Sprite emptyIcon;
     public List<Tool> tools = new List<Tool>();
     public List<Image> toolIcons = new List<Image>();
 
@@ -18,11 +17,16 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-        if (tools.Count <= 0) return;
+        UpdateHUDIcons();
+    }
 
-        for (int i = 0; i < tools.ToList().Count; i++)
+    private void UpdateHUDIcons()
+    {
+        for (int i = 0; i < toolIcons.Count; i++)
         {
-            toolIcons[i].sprite = tools[i].icon;
+            toolIcons[i].sprite = (i < tools.Count && tools[i] != null)
+                ? tools[i].icon
+                : emptyIcon;
         }
     }
 }

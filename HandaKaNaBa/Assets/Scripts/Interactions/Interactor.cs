@@ -1,33 +1,17 @@
 using UnityEngine;
 
-//interface IInteractable
-//{
-//    public void Interact();
-//}
-
 public class Interactor : MonoBehaviour
 {
-    public Transform interactorSource;
-    public float interactRange;
+    public System.Action<Collider> OnStay;
+    public System.Action<Collider> OnExit;
 
-    void Start()
+    private void OnTriggerStay(Collider other)
     {
-        
+        OnStay?.Invoke(other);
     }
 
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        if(Input.GetKeyUp(KeyCode.E))
-        {
-            Ray ray = new Ray(interactorSource.position, interactorSource.forward);
-
-            if(Physics.Raycast(ray, out RaycastHit hitInfo, interactRange))
-            {
-                if(hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
-                {
-                    interactObj.Interact();
-                }
-            }
-        }
+        OnExit?.Invoke(other);
     }
 }

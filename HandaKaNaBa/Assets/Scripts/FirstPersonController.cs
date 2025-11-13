@@ -80,13 +80,28 @@ public class FirstPersonController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Ray ray = new Ray(playerCamera.position, playerCamera.forward);
+            //Ray ray = new Ray(playerCamera.position, playerCamera.forward);
+            Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+
+            Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red, 5f);
+
             if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
             {
-                if (hit.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                IInteractable interactObj = hit.collider.GetComponentInParent<IInteractable>();
+                
+                if (interactObj != null)
                 {
                     interactObj.Interact();
                 }
+
+                //if (hit.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                //{
+                //    interactObj.Interact();
+                //}
+                //if (hit.collider.gameObject.GetComponentInParent<InteractableObject>() != null) 
+                //{
+                //    hit.collider.gameObject.GetComponentInParent<InteractableObject>().Interact();
+                //}
             }
         }
     }

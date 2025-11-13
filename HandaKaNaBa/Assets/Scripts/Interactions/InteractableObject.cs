@@ -14,8 +14,17 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public AudioSource src;
     public AudioClip clip;
 
+    [SerializeField] private Interactor interactor;
+
     void Start()
     {
+        interactor = GetComponentInChildren<Interactor>();
+        if (interactor != null)
+        {
+            interactor.OnStay += OnStayHandler;
+            interactor.OnExit += OnExitHandler;
+        }
+
         isCompleted = false;
         if(isTaskObject)
             TaskManager.Instance.RegisterTask(this.gameObject);
@@ -53,25 +62,18 @@ public class InteractableObject : MonoBehaviour, IInteractable
         TaskManager.Instance.CheckAllTasks();
     }
 
-    private void OnTriggerStay(Collider collision)
+    private void OnStayHandler(Collider collision)
     {
         FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
 
         if (player != null)
         {
-            //if (isCompleted) return;
             if (interactTxt == null) return;
-
             interactTxt.SetActive(true);
         }
     }
 
-    public void OnTriggerEnter(Collider collision)
-    {
-        
-    }
-
-    public void OnTriggerExit(Collider collision)
+    private void OnExitHandler(Collider collision)
     {
         FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
 
