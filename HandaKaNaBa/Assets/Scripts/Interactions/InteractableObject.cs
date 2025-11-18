@@ -1,8 +1,17 @@
 using UnityEngine;
 
+public enum TaskType
+{
+    None,
+    LockDoors,
+    LockWindows,
+    EmergencyKit,
+}
+
 public class InteractableObject : MonoBehaviour, IInteractable  
 {
     [Header("TASK SETTINGS")]
+    public TaskType taskType;
     public string taskName;
     public bool isTaskObject;
     public bool isCompleted;
@@ -26,8 +35,11 @@ public class InteractableObject : MonoBehaviour, IInteractable
         }
 
         isCompleted = false;
-        if(isTaskObject)
-            TaskManager.Instance.RegisterTask(this.gameObject);
+        if (isTaskObject)
+            //TaskManager.Instance.RegisterTask(this.gameObject);
+            TaskManager.Instance.RegisterTask(this);
+        else
+            taskType = TaskType.None;
     }
 
     // Update is called once per frame
@@ -58,8 +70,7 @@ public class InteractableObject : MonoBehaviour, IInteractable
         if (!isTaskObject) return;
 
         isCompleted = true;
-        Debug.Log($"{taskName} completed!");
-        TaskManager.Instance.CheckAllTasks();
+        TaskManager.Instance.CheckTaskProgress(taskType);
     }
 
     private void OnStayHandler(Collider collision)
