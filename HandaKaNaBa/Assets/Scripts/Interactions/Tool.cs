@@ -23,11 +23,21 @@ public class Tool : MonoBehaviour, IInteractable
     {
         Debug.Log("Interacted with: " + this.name);
 
+        if (InventoryManager.Instance.toolCount >= InventoryManager.Instance.maxToolCount)
+        {
+            // NOTIFY PLAYER THAT INVENTORY IS FULL
+            Debug.Log("Inventory is full");
+            return;
+        }
+            
+
         GameObject toolGO = Instantiate(this.gameObject);
         toolGO.transform.SetParent(InventoryManager.Instance.transform);
         toolGO.SetActive(false);
 
-        InventoryManager.Instance.tools.Add(toolGO.GetComponent<Tool>());
+        //InventoryManager.Instance.tools.Add(toolGO.GetComponent<Tool>());
+        InventoryManager.Instance.AddTool(toolGO.GetComponent<Tool>());
+
         Destroy(this.gameObject);
         
     }

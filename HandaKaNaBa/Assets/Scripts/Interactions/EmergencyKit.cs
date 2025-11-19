@@ -43,7 +43,8 @@ public class EmergencyKit : InteractableObject
             {
                 Tool tool = matchingTools[i];
 
-                playerTools.Remove(tool);       // Remove from inventory
+                //playerTools.Remove(tool);       // Remove from inventory
+                InventoryManager.Instance.RemoveTool(tool);
                 toolsDeposited.Add(tool);       // Add to kit
 
                 Debug.Log($"Deposited {tool.toolName}");

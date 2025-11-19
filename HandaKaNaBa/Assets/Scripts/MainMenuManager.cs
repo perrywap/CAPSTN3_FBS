@@ -12,13 +12,7 @@ public class MainMenuManager : MonoBehaviour
     [Header("UI Buttons (Optional)")]
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
-
-    [Header("Menu Buttons Sprites")]
-    [SerializeField] private Image lampPostSprite;
-    [SerializeField] private List<Sprite> buttonSprites;
-    
-    private int index = 0;
-
+     
     private void Start()
     {
         if (startButton != null)
@@ -61,16 +55,16 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnStartButtonClicked()
     {
-        lampPostSprite.sprite = buttonSprites[1];
+        Debug.Log("Hello");
     }
 
     public void OnOptionButtonClicked()
     {
-        lampPostSprite.sprite = buttonSprites[2];
+        Debug.Log("Love");
     }
 
     public void OnQuitButtonClicked()
     {
-        lampPostSprite.sprite = buttonSprites[3];
+        Debug.Log("Goodbye");
     }
 }

@@ -151,12 +151,6 @@ MonoBehaviour:
   startScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
   startButton: {fileID: 0}
   quitButton: {fileID: 0}
-  lampPostSprite: {fileID: 923966465}
-  buttonSprites:
-  - {fileID: 1557518680, guid: 8475200bf9c3ac74db834c23498a78ad, type: 3}
-  - {fileID: 1618653486, guid: 8475200bf9c3ac74db834c23498a78ad, type: 3}
-  - {fileID: 623490555, guid: 8475200bf9c3ac74db834c23498a78ad, type: 3}
-  - {fileID: -2092536517, guid: 8475200bf9c3ac74db834c23498a78ad, type: 3}
 --- !u!4 &52297781
 Transform:
   m_ObjectHideFlags: 0
@@ -600,8 +594,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -368.4802, y: -21.4065}
-  m_SizeDelta: {x: 364.4475, y: 151.7666}
+  m_AnchoredPosition: {x: -375.245, y: -29.6746}
+  m_SizeDelta: {x: 386.9969, y: 264.5134}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &424597080
 MonoBehaviour:
@@ -625,8 +619,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.9587552, g: 1, b: 0.7877358, a: 1}
+    m_PressedColor: {r: 0.72050005, g: 0.8018868, b: 0.7073247, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -672,15 +666,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 2010730192, guid: 017a775e812a2704c8ac6318fb50540f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1409,8 +1403,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -393.1, y: -376.3759}
-  m_SizeDelta: {x: 315.2, y: 161.5379}
+  m_AnchoredPosition: {x: -396.5596, y: -381.4025}
+  m_SizeDelta: {x: 329.3662, y: 215.8035}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &743964233
 MonoBehaviour:
@@ -1434,8 +1428,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.7930013, b: 0.759434, a: 1}
+    m_PressedColor: {r: 0.8113208, g: 0.63910645, b: 0.63910645, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1481,15 +1475,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 1584410782, guid: 017a775e812a2704c8ac6318fb50540f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1541,8 +1535,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -325.92642, y: -196.99231}
-  m_SizeDelta: {x: 363.6959, y: 172.0608}
+  m_AnchoredPosition: {x: -327.80557, y: -210.52191}
+  m_SizeDelta: {x: 379.4804, y: 235.1989}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &838845170
 MonoBehaviour:
@@ -1566,8 +1560,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.9587552, g: 1, b: 0.7877358, a: 1}
+    m_PressedColor: {r: 0.72050005, g: 0.8018868, b: 0.7073247, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1613,15 +1607,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -635475086, guid: 017a775e812a2704c8ac6318fb50540f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
