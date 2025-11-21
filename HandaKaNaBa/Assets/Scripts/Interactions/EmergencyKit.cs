@@ -60,7 +60,7 @@ public class EmergencyKit : InteractableObject
         if (allToolsDeposited)
         {
             base.Interact();
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
             isCompleted = true;
         }
         else if (depositedAny)

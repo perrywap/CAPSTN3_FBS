@@ -7,6 +7,7 @@ public enum TaskType
     LockWindows,
     EmergencyKit,
     WaterRefill,
+    WaterSupply,
     SecureValuables
 }
 
