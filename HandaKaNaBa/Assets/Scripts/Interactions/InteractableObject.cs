@@ -8,7 +8,8 @@ public enum TaskType
     EmergencyKit,
     WaterRefill,
     WaterSupply,
-    SecureValuables
+    SecureValuables,
+    ChargePhone
 }
 
 public class InteractableObject : MonoBehaviour, IInteractable  
