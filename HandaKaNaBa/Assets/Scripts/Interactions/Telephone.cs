@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class AppliancePlug : InteractableObject
+public class Telephone :InteractableObject
 {
     public override void Interact()
     {
         if (isCompleted) return;
-
+        
         base.Interact();
-        this.gameObject.SetActive(false);
+        // Put code for cloud bubble interaction
     }
 }

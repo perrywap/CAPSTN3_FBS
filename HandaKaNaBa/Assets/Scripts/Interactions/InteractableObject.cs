@@ -9,7 +9,10 @@ public enum TaskType
     WaterRefill,
     WaterSupply,
     SecureValuables,
-    ChargePhone
+    ChargePhone,
+    CandlesMatchbox,
+    UnplugAppliance,
+    CallMembers
 }
 
 public class InteractableObject : MonoBehaviour, IInteractable  
