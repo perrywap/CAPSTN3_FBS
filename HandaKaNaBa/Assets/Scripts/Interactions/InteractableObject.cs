@@ -12,7 +12,8 @@ public enum TaskType
     ChargePhone,
     CandlesMatchbox,
     UnplugAppliance,
-    CallMembers
+    CallMembers,
+    CoverGaps
 }
 
 public class InteractableObject : MonoBehaviour, IInteractable  

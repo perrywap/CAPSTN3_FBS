@@ -11,16 +11,15 @@ public class ElectricPlug : InteractableObject
     [SerializeField] private Transform phonePos;
 
     [SerializeField] private List<Tool> neededTools;
-    [SerializeField] private BoxCollider collider;
 
     private void Update()
     {
         if (this.gameObject.GetComponentInChildren<AppliancePlug>())
         {
-            collider.enabled = false;
+            this.GetComponent<BoxCollider>().enabled = false;
         }
         else
-            collider.enabled = true;
+            this.GetComponent<BoxCollider>().enabled = true;
 
     }
 
@@ -52,7 +51,7 @@ public class ElectricPlug : InteractableObject
 
     private void CompleteAllOtherPlugs()
     {
-        ElectricPlug[] allPlugs = FindObjectsOfType<ElectricPlug>();
+        ElectricPlug[] allPlugs = FindObjectsByType<ElectricPlug>(FindObjectsSortMode.None);
 
         foreach (ElectricPlug plug in allPlugs)
         {
@@ -64,6 +63,7 @@ public class ElectricPlug : InteractableObject
             }
         }
     }
+
 
     private void RemoveNeededToolsFromInventory()
     {
