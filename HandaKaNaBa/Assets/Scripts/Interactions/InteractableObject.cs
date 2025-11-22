@@ -6,6 +6,14 @@ public enum TaskType
     LockDoors,
     LockWindows,
     EmergencyKit,
+    WaterRefill,
+    WaterSupply,
+    SecureValuables,
+    ChargePhone,
+    CandlesMatchbox,
+    UnplugAppliance,
+    CallMembers,
+    CoverGaps
 }
 
 public class InteractableObject : MonoBehaviour, IInteractable  
@@ -15,38 +23,19 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public string taskName;
     public bool isTaskObject;
     public bool isCompleted;
-
-    [Header("INTERACTION SETTINGS")]
-    public GameObject interactTxt;
+    public bool hideOnComplete;
 
     [Header("SFX SETTINGS")]
     public AudioSource src;
     public AudioClip clip;
 
-    [SerializeField] private Interactor interactor;
-
     void Start()
     {
-        interactor = GetComponentInChildren<Interactor>();
-        if (interactor != null)
-        {
-            interactor.OnStay += OnStayHandler;
-            interactor.OnExit += OnExitHandler;
-        }
-
         isCompleted = false;
         if (isTaskObject)
-            //TaskManager.Instance.RegisterTask(this.gameObject);
             TaskManager.Instance.RegisterTask(this);
         else
             taskType = TaskType.None;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(isCompleted)
-            interactTxt.SetActive(false);
     }
 
     public virtual void Interact()
@@ -71,27 +60,5 @@ public class InteractableObject : MonoBehaviour, IInteractable
 
         isCompleted = true;
         TaskManager.Instance.CheckTaskProgress(taskType);
-    }
-
-    private void OnStayHandler(Collider collision)
-    {
-        FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
-
-        if (player != null)
-        {
-            if (interactTxt == null) return;
-            interactTxt.SetActive(true);
-        }
-    }
-
-    private void OnExitHandler(Collider collision)
-    {
-        FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
-
-        if (player != null)
-        {
-            if (interactTxt == null) return;
-            interactTxt.SetActive(false);
-        }
     }
 }

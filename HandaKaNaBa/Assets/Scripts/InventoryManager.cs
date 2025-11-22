@@ -7,7 +7,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
 
-    [SerializeField] private GameObject inventoryUI;
+    public GameObject inventoryUI;
     [SerializeField] private Image inventoryIcon;
     [SerializeField] private GameObject toolIconPrefab;
     [SerializeField] private Transform iconsParent;
@@ -94,7 +94,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void OnOpenInventory()
+    public void OnOpenInventory()
     {
         // Clear existing icons
         foreach (Transform child in iconsParent)
