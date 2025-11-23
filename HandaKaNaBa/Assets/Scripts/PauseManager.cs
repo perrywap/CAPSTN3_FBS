@@ -28,7 +28,7 @@ public class PauseManager : MonoBehaviour
     private void Start()
     {
         pausePanel.SetActive(false);
-        volumeControls.SetActive(false);
+        //volumeControls.SetActive(false);
 
         float savedVolume = PlayerPrefs.GetFloat(VolumePrefKey, 1f);
         AudioListener.volume = savedVolume;
