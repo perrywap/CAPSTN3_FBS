@@ -537,10 +537,9 @@ MonoBehaviour:
   taskName: Use Hammer
   isTaskObject: 0
   isCompleted: 0
-  interactTxt: {fileID: 484593152}
+  hideOnComplete: 0
   src: {fileID: 0}
   clip: {fileID: 0}
-  interactor: {fileID: 0}
   neededTools:
   - {fileID: 7233818927618426795, guid: cabce4262f7b96f4fa804b7f86317975, type: 3}
   toolsDeposited: []
@@ -1279,6 +1278,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a45048fde7c9a641898e4aaef1a023a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactor
+--- !u!1 &89709450 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8629226246263654139, guid: 5d5552d4e7a1a244a9125d209f5af29d, type: 3}
+  m_PrefabInstance: {fileID: 1979366831}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &98990992 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bb3fba44263d19442852e95589352d16, type: 3}
@@ -4839,10 +4843,9 @@ MonoBehaviour:
   taskName: 
   isTaskObject: 0
   isCompleted: 0
-  interactTxt: {fileID: 0}
+  hideOnComplete: 0
   src: {fileID: 555221906}
   clip: {fileID: 8300000, guid: 4356a69b2bc4b664082e47fd35a39868, type: 3}
-  interactor: {fileID: 0}
   pivot: {fileID: 874180521}
   isOpen: 0
   openAngle: 90
@@ -8013,6 +8016,7 @@ MonoBehaviour:
   mouseSensitivity: 2
   playerCamera: {fileID: 216825167}
   interactRange: 1
+  interactTextUI: {fileID: 89709450}
   footstepClips:
   - {fileID: 8300000, guid: 7eef3c19548ace64ab38167d3f075fed, type: 3}
   footstepInterval: 0.45
@@ -8767,10 +8771,9 @@ MonoBehaviour:
   taskName: Prepare Emergency kit
   isTaskObject: 1
   isCompleted: 0
-  interactTxt: {fileID: 1216014818}
+  hideOnComplete: 0
   src: {fileID: 0}
   clip: {fileID: 0}
-  interactor: {fileID: 1932822900}
   neededTools:
   - {fileID: 7233818927618426795, guid: cabce4262f7b96f4fa804b7f86317975, type: 3}
   - {fileID: 2213013581654401720, guid: 5d5552d4e7a1a244a9125d209f5af29d, type: 3}
@@ -15918,10 +15921,9 @@ MonoBehaviour:
   taskName: Lock door
   isTaskObject: 1
   isCompleted: 0
-  interactTxt: {fileID: 1460140158}
+  hideOnComplete: 0
   src: {fileID: 0}
   clip: {fileID: 0}
-  interactor: {fileID: 0}
   currentGO: {fileID: 7424896217774674134}
   newGO: {fileID: 598188448}
 --- !u!114 &818142333522492854
@@ -16482,10 +16484,9 @@ MonoBehaviour:
   taskName: 
   isTaskObject: 0
   isCompleted: 0
-  interactTxt: {fileID: 0}
+  hideOnComplete: 0
   src: {fileID: 0}
   clip: {fileID: 0}
-  interactor: {fileID: 0}
   pivot: {fileID: 302695869}
   isOpen: 0
   openAngle: 130
@@ -16998,10 +16999,9 @@ MonoBehaviour:
   taskName: 
   isTaskObject: 0
   isCompleted: 0
-  interactTxt: {fileID: 0}
-  src: {fileID: 0}
-  clip: {fileID: 0}
-  interactor: {fileID: 0}
+  hideOnComplete: 0
+  src: {fileID: 3469287837669767300}
+  clip: {fileID: 8300000, guid: 8cc34700aeae71547b19f43d98b1f09f, type: 3}
   isOpen: 0
   screen: {fileID: 1931226474}
 --- !u!82 &3469287837669767300
@@ -17016,10 +17016,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 8cc34700aeae71547b19f43d98b1f09f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.065
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -17340,10 +17340,9 @@ MonoBehaviour:
   taskName: Spawn sphere
   isTaskObject: 1
   isCompleted: 0
-  interactTxt: {fileID: 7661534232690522226}
+  hideOnComplete: 0
   src: {fileID: 0}
   clip: {fileID: 0}
-  interactor: {fileID: 0}
   spawnedObj: {fileID: 4851935886946537555, guid: bd3518e16be955f44992ab7d04b9fc71, type: 3}
   spawnPos: {fileID: 2484142029439281243}
 --- !u!224 &4390105940528377380
@@ -17785,10 +17784,9 @@ MonoBehaviour:
   taskName: Place a sphere on top
   isTaskObject: 0
   isCompleted: 0
-  interactTxt: {fileID: 8441525767749307228}
+  hideOnComplete: 0
   src: {fileID: 0}
   clip: {fileID: 0}
-  interactor: {fileID: 0}
   spawnedObj: {fileID: 4851935886946537555, guid: bd3518e16be955f44992ab7d04b9fc71, type: 3}
   spawnPos: {fileID: 3304056984912123408}
 --- !u!33 &7226766350640326308
@@ -17854,10 +17852,9 @@ MonoBehaviour:
   taskName: 
   isTaskObject: 0
   isCompleted: 0
-  interactTxt: {fileID: 0}
+  hideOnComplete: 0
   src: {fileID: 0}
   clip: {fileID: 0}
-  interactor: {fileID: 0}
   pivot: {fileID: 497170350}
   isOpen: 0
   openAngle: 130
@@ -18106,10 +18103,9 @@ MonoBehaviour:
   taskName: 
   isTaskObject: 0
   isCompleted: 0
-  interactTxt: {fileID: 0}
+  hideOnComplete: 0
   src: {fileID: 9075604799919206793}
   clip: {fileID: 8300000, guid: 4356a69b2bc4b664082e47fd35a39868, type: 3}
-  interactor: {fileID: 0}
   pivot: {fileID: 1276660709}
   isOpen: 0
   openAngle: 90
