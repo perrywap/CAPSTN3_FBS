@@ -20,7 +20,7 @@ public class NeedToolInteraction : InteractableObject
         if (hasAllTools)
         {
             base.Interact();
-            this.transform.gameObject.SetActive(false);
+            //this.transform.gameObject.SetActive(false);
         }
         else
         {

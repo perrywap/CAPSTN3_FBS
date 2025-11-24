@@ -43,7 +43,8 @@ public class EmergencyKit : InteractableObject
             {
                 Tool tool = matchingTools[i];
 
-                playerTools.Remove(tool);       // Remove from inventory
+                //playerTools.Remove(tool);       // Remove from inventory
+                InventoryManager.Instance.RemoveTool(tool);
                 toolsDeposited.Add(tool);       // Add to kit
 
                 Debug.Log($"Deposited {tool.toolName}");
@@ -59,7 +60,7 @@ public class EmergencyKit : InteractableObject
         if (allToolsDeposited)
         {
             base.Interact();
-            this.gameObject.SetActive(false);
+            //`this.gameObject.SetActive(false);
             isCompleted = true;
         }
         else if (depositedAny)

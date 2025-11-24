@@ -5,57 +5,33 @@ public class Tool : MonoBehaviour, IInteractable
 {
     public string toolName;
     public Sprite icon;
-    public GameObject interactTxt;
+    public GameObject prefab;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        prefab = this.gameObject;
     }
 
     public virtual void Interact()
     {
         Debug.Log("Interacted with: " + this.name);
 
+        if (InventoryManager.Instance.toolCount >= InventoryManager.Instance.maxToolCount)
+        {
+            // NOTIFY PLAYER THAT INVENTORY IS FULL
+            Debug.Log("Inventory is full");
+            return;
+        }
+            
+
         GameObject toolGO = Instantiate(this.gameObject);
         toolGO.transform.SetParent(InventoryManager.Instance.transform);
         toolGO.SetActive(false);
 
-        InventoryManager.Instance.tools.Add(toolGO.GetComponent<Tool>());
+        //InventoryManager.Instance.tools.Add(toolGO.GetComponent<Tool>());
+        InventoryManager.Instance.AddTool(toolGO.GetComponent<Tool>());
+
         Destroy(this.gameObject);
         
-    }
-
-    private void OnTriggerStay(Collider collision)
-    {
-        FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
-
-        if (player != null)
-        {
-            //if (isCompleted) return;
-
-            interactTxt.SetActive(true);
-        }
-    }
-
-    public void OnTriggerEnter(Collider collision)
-    {
-
-    }
-
-    public void OnTriggerExit(Collider collision)
-    {
-        FirstPersonController player = collision.gameObject.GetComponent<FirstPersonController>();
-
-        if (player != null)
-        {
-            interactTxt.SetActive(false);
-        }
     }
 }

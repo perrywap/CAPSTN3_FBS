@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EndOfDayManager : MonoBehaviour
+public class EndOfDayManager : MonoBehaviour, IInteractable
 {
     [System.Serializable]
     public class TaskQuestion
@@ -32,6 +32,11 @@ public class EndOfDayManager : MonoBehaviour
     private void Start()
     {
         questionUI.SetActive(false);
+    }
+
+    public void Interact()
+    {
+        StartEndOfDaySequence();
     }
 
     public void StartEndOfDaySequence()

@@ -7,30 +7,41 @@ public class PauseManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject pausePanel;
 
+    [Header("Volume Controls")]
+    [SerializeField] private GameObject volumeControls;
+    [SerializeField] private Slider volumeSlider; 
+
     [Header("Player")]
     [SerializeField] private FirstPersonController playerController;
 
-    [Header("Buttons (optional)")]
+    [Header("Buttons")]
     [SerializeField] private Button resumeButton;
-    [SerializeField] private Button quitToDesktopButton;
+    [SerializeField] private Button optionsButton;
     [SerializeField] private Button quitToMainMenuButton;
-    [SerializeField] private string mainMenuSceneName = "";
+    [SerializeField] private string mainMenuSceneName = "MainMenu";
 
     private bool isPaused = false;
+    private bool optionsVisible = false;
+
+    private const string VolumePrefKey = "GameVolume"; 
 
     private void Start()
     {
-        if (pausePanel != null)
-            pausePanel.SetActive(false);
+        pausePanel.SetActive(false);
+        //volumeControls.SetActive(false);
 
-        if (resumeButton != null)
-            resumeButton.onClick.AddListener(TogglePause);
+        float savedVolume = PlayerPrefs.GetFloat(VolumePrefKey, 1f);
+        AudioListener.volume = savedVolume;
 
-        if (quitToDesktopButton != null)
-            quitToDesktopButton.onClick.AddListener(QuitApplication);
+        if (volumeSlider != null)
+        {
+            volumeSlider.value = savedVolume;
+            volumeSlider.onValueChanged.AddListener(OnVolumeChanged); 
+        }
 
-        if (quitToMainMenuButton != null)
-            quitToMainMenuButton.onClick.AddListener(QuitToMainMenu);
+        resumeButton.onClick.AddListener(TogglePause);
+        optionsButton.onClick.AddListener(ToggleOptions);
+        quitToMainMenuButton.onClick.AddListener(QuitToMainMenu);
     }
 
     private void Update()
@@ -50,12 +61,9 @@ public class PauseManager : MonoBehaviour
     private void PauseGame()
     {
         isPaused = true;
-
-        if (pausePanel != null)
-            pausePanel.SetActive(true);
-
+        pausePanel.SetActive(true);
         Time.timeScale = 0f;
-        AudioListener.pause = true;
+        AudioListener.pause = false; 
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -63,12 +71,13 @@ public class PauseManager : MonoBehaviour
         playerController?.LockControls();
     }
 
-    public void ResumeGame()
+    private void ResumeGame()
     {
         isPaused = false;
 
-        if (pausePanel != null)
-            pausePanel.SetActive(false);
+        pausePanel.SetActive(false);
+        volumeControls.SetActive(false);
+        optionsVisible = false;
 
         Time.timeScale = 1f;
         AudioListener.pause = false;
@@ -79,27 +88,25 @@ public class PauseManager : MonoBehaviour
         playerController?.UnlockControls();
     }
 
-    private void QuitApplication()
+    private void ToggleOptions()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        optionsVisible = !optionsVisible;
+        volumeControls.SetActive(optionsVisible);
+    }
+
+    private void OnVolumeChanged(float value) 
+    {
+        AudioListener.volume = value;
+        PlayerPrefs.SetFloat(VolumePrefKey, value);
     }
 
     private void QuitToMainMenu()
     {
+        Debug.Log("QUIT BUTTON PRESSED!"); 
         Time.timeScale = 1f;
         AudioListener.pause = false;
-        if (!string.IsNullOrEmpty(mainMenuSceneName))
-        {
-            SceneManager.LoadScene(mainMenuSceneName);
-        }
-        else
-        {
-            Debug.LogWarning("Main menu scene name not assigned in PauseManager.");
-        }
+        if (!string.IsNullOrEmpty("MainMenu"))
+            SceneManager.LoadScene("MainMenu");
     }
 
     private void OnDisable()

@@ -20,6 +20,7 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Interaction Settings")]
     [SerializeField] private float interactRange = 3f;
+    [SerializeField] private GameObject interactTextUI;
 
     [Header("Footstep Settings")]
     [SerializeField] private AudioClip[] footstepClips;
@@ -76,7 +77,8 @@ public class FirstPersonController : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
     }
 
-    void HandleInteraction()
+    /*(
+    void HandleInteraction1()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -93,18 +95,69 @@ public class FirstPersonController : MonoBehaviour
                 {
                     interactObj.Interact();
                 }
-
-                //if (hit.collider.gameObject.TryGetComponent(out IInteractable interactObj))
-                //{
-                //    interactObj.Interact();
-                //}
-                //if (hit.collider.gameObject.GetComponentInParent<InteractableObject>() != null) 
-                //{
-                //    hit.collider.gameObject.GetComponentInParent<InteractableObject>().Interact();
-                //}
             }
         }
     }
+
+    void HandleInteraction2()
+    {
+        // Hide by default
+        interactTextUI.SetActive(false);
+
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
+        {
+            IInteractable interactObj = hit.collider.GetComponentInParent<IInteractable>();
+
+            if (interactObj != null)
+            {
+
+                // Show interaction prompt
+                interactTextUI.SetActive(true);
+
+                // If player presses E
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    interactObj.Interact();
+                }
+            }
+        }
+    }
+    */
+    void HandleInteraction()
+    {
+        // Hide by default
+        interactTextUI.SetActive(false);
+
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
+        {
+            IInteractable interactObj = hit.collider.GetComponentInParent<IInteractable>();
+
+            if (interactObj != null)
+            {
+                // Cast the interface to MonoBehaviour so we can use GetComponent
+                MonoBehaviour mono = interactObj as MonoBehaviour;
+
+                InteractableObject io = mono.GetComponent<InteractableObject>();
+
+                if (io != null && io.isTaskObject && io.isCompleted)
+                    return;
+
+                // Show interaction prompt
+                interactTextUI.SetActive(true);
+
+                // If player presses E
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    interactObj.Interact();
+                }
+            }
+        }
+    }
+
 
     void HandleFootsteps()
     {

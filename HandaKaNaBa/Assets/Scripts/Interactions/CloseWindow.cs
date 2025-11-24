@@ -2,14 +2,12 @@ using UnityEngine;
 
 public class CloseWindow : InteractableObject
 {
-    [SerializeField] private MeshRenderer renderer;
     [SerializeField] private Material glassMat;
     private Material[] materials;
 
     private void Awake()
     {
-        renderer = GetComponent<MeshRenderer>();
-        materials = renderer.materials;
+        materials = this.GetComponent<MeshRenderer>().materials;
         glassMat = materials[3];
 
         glassMat.SetInt("_Cull", 1);
