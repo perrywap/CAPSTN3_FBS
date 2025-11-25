@@ -19,6 +19,14 @@ public class StandFan : InteractableObject
         {
             fan.transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
         }
+
+        if (!isPlugged)
+        {
+            isTaskObject = true;
+            isCompleted = true;
+            Debug.Log("Fan is not plugged in!");
+            return;
+        }
     }
 
     public override void Interact()
