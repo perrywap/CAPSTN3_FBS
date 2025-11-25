@@ -2209,8 +2209,9 @@ GameObject:
   - component: {fileID: 996955546}
   - component: {fileID: 996955545}
   - component: {fileID: 996955544}
+  - component: {fileID: 996955548}
   m_Layer: 0
-  m_Name: Shelf
+  m_Name: HighShelf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2308,6 +2309,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &996955548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996955543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e02014e831a9984583a9cb97a8dde53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HighSurface
+  taskType: 12
+  taskName: Move items to high surface
+  isTaskObject: 1
+  isCompleted: 0
+  hideOnComplete: 0
+  src: {fileID: 0}
+  clip: {fileID: 0}
+  itemsToPlace: []
+  spacing: 0.05
+  maxSearchSteps: 200
+  surfacePoint: {fileID: 996955547}
 --- !u!4 &998068075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5446530783446422144, guid: 4d4e2d5d44aa7c845b5d037e8af2e1ee, type: 3}
