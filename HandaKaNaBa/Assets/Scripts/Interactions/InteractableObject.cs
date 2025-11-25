@@ -13,8 +13,7 @@ public enum TaskType
     CandlesMatchbox,
     UnplugAppliance,
     CallMembers,
-    CoverGaps,
-    MoveItems
+    CoverGaps
 }
 
 public class InteractableObject : MonoBehaviour, IInteractable  

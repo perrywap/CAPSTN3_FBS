@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EndOfDayManager : MonoBehaviour, IInteractable
 {
@@ -12,26 +13,47 @@ public class EndOfDayManager : MonoBehaviour, IInteractable
         public string question;
     }
 
-    [SerializeField] private List<TaskQuestion> questions; // Assign in Inspector
-    [SerializeField] private GameObject questionUI;        // UI panel for yes/no buttons
+    [SerializeField] private List<TaskQuestion> questions;
+    [SerializeField] private GameObject questionUI;
     [SerializeField] private TMPro.TextMeshProUGUI questionText;
 
+    [Header("UI References")]
+    [SerializeField] private GameObject failUI;
+    [SerializeField] private Button retryButton;
+    [SerializeField] private Button quitButton;
+    [SerializeField] private float fadeDuration = 0.5f;
 
     [Header("Scenes")]
-    [Tooltip("Name of the next scene to load if successful.")]
     [SerializeField] private string nextSceneName;
-
-    [Tooltip("Name of the scene to load if failed.")]
-    [SerializeField] private string failedSceneName;
+    [SerializeField] private string quitSceneName;
 
     private FirstPersonController playerController;
-
     private int currentQuestionIndex = 0;
     private bool waitingForAnswer = false;
+    private string lastPlayedScene;
+    private CanvasGroup failCanvasGroup;
 
     private void Start()
     {
         questionUI.SetActive(false);
+        if (failUI != null)
+        {
+            failUI.SetActive(false);
+            failCanvasGroup = failUI.GetComponent<CanvasGroup>();
+            if (failCanvasGroup == null)
+                failCanvasGroup = failUI.AddComponent<CanvasGroup>();
+            failCanvasGroup.alpha = 0f;
+            failCanvasGroup.interactable = true;
+            failCanvasGroup.blocksRaycasts = true;
+        }
+
+        if (quitButton != null)
+            quitButton.onClick.AddListener(QuitToMenu);
+
+        if (retryButton != null)
+            retryButton.onClick.AddListener(Retry);
+
+        lastPlayedScene = SceneManager.GetActiveScene().name;
     }
 
     public void Interact()
@@ -42,7 +64,6 @@ public class EndOfDayManager : MonoBehaviour, IInteractable
     public void StartEndOfDaySequence()
     {
         ShowCursor();
-
         currentQuestionIndex = 0;
         questionUI.SetActive(true);
         AskNextQuestion();
@@ -52,7 +73,6 @@ public class EndOfDayManager : MonoBehaviour, IInteractable
     {
         if (currentQuestionIndex >= questions.Count)
         {
-            // All questions passed
             LevelComplete();
             return;
         }
@@ -76,7 +96,6 @@ public class EndOfDayManager : MonoBehaviour, IInteractable
             return;
         }
 
-        // Task was truly complete — continue to next
         currentQuestionIndex++;
         AskNextQuestion();
     }
@@ -91,28 +110,22 @@ public class EndOfDayManager : MonoBehaviour, IInteractable
 
         if (actuallyComplete)
         {
-            // Player answered incorrectly (missed what they did)
             GameFail(current.taskType);
             return;
         }
 
-        // Player correctly admitted not doing it → fail anyway (since task incomplete)
         GameFail(current.taskType);
     }
 
     void GameFail(TaskType failedTask)
     {
         questionUI.SetActive(false);
-        //Debug.Log($"You failed at: {failedTask}. Try again!");
-        // TODO: Show fail screen or restart
-        FailSequence($"You failed at: {failedTask}. Try again!");
+        FailSequence();
     }
 
     void LevelComplete()
     {
         questionUI.SetActive(false);
-        Debug.Log("All tasks done correctly! You can go to bed.");
-        // TODO: Trigger end sequence or next level
         GoToNextScene();
     }
 
@@ -120,27 +133,61 @@ public class EndOfDayManager : MonoBehaviour, IInteractable
     {
         if (!string.IsNullOrEmpty(nextSceneName))
         {
+            Time.timeScale = 1f;
             SceneManager.LoadScene(nextSceneName);
-        }
-        else
-        {
-            Debug.LogWarning("? No next scene assigned in GoToBedTrigger!");
         }
     }
 
-    private void FailSequence(string message)
+    private void FailSequence()
     {
-        Debug.Log($"FAILED: {message}");
-        HideCursor();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0f;
         playerController?.UnlockControls();
 
-        if (!string.IsNullOrEmpty(failedSceneName))
+        if (failUI != null)
         {
-            SceneManager.LoadScene(failedSceneName);
+            failUI.SetActive(true);
+            if (failCanvasGroup != null)
+            {
+                failCanvasGroup.alpha = 0f;
+                failCanvasGroup.interactable = true;
+                failCanvasGroup.blocksRaycasts = true;
+            }
+            StartCoroutine(FadeInFailUI());
         }
-        else
+    }
+
+    private IEnumerator FadeInFailUI()
+    {
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
         {
-            Debug.LogWarning("? Failed scene not assigned — staying in current scene.");
+            elapsed += Time.unscaledDeltaTime;
+            float alpha = Mathf.Clamp01(elapsed / fadeDuration);
+            if (failCanvasGroup != null)
+                failCanvasGroup.alpha = alpha;
+            yield return null;
+        }
+        if (failCanvasGroup != null)
+            failCanvasGroup.alpha = 1f;
+    }
+
+    public void Retry()
+    {
+        Time.timeScale = 1f;
+        if (!string.IsNullOrEmpty(lastPlayedScene))
+        {
+            SceneManager.LoadScene(lastPlayedScene);
+        }
+    }
+
+    public void QuitToMenu()
+    {
+        Time.timeScale = 1f;
+        if (!string.IsNullOrEmpty(quitSceneName))
+        {
+            SceneManager.LoadScene(quitSceneName);
         }
     }
 

@@ -5,12 +5,6 @@ public class Tool : MonoBehaviour, IInteractable
 {
     public string toolName;
     public Sprite icon;
-    public GameObject prefab;
-
-    private void Start()
-    {
-        prefab = this.gameObject;
-    }
 
     public virtual void Interact()
     {
