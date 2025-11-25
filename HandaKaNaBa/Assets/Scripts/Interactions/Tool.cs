@@ -5,6 +5,12 @@ public class Tool : MonoBehaviour, IInteractable
 {
     public string toolName;
     public Sprite icon;
+    public GameObject prefab;
+
+    private void Start()
+    {
+        prefab = this.gameObject;
+    }
 
     public virtual void Interact()
     {
@@ -16,7 +22,7 @@ public class Tool : MonoBehaviour, IInteractable
             Debug.Log("Inventory is full");
             return;
         }
-            
+
 
         GameObject toolGO = Instantiate(this.gameObject);
         toolGO.transform.SetParent(InventoryManager.Instance.transform);
@@ -26,6 +32,6 @@ public class Tool : MonoBehaviour, IInteractable
         InventoryManager.Instance.AddTool(toolGO.GetComponent<Tool>());
 
         Destroy(this.gameObject);
-        
+
     }
 }
