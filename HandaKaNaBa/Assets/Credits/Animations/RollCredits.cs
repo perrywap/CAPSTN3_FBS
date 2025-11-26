@@ -9,7 +9,7 @@ public class RollCredits : MonoBehaviour
 
     private void Start()
     {
-        //Invoke("ReturnToMainMenu", 22f);
+        Invoke("ReturnToMainMenu", 25f);
     }
 
     public void ReturnToMainMenu()
