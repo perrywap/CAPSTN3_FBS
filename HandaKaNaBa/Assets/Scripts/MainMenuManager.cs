@@ -1,14 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 public class MainMenuManager : MonoBehaviour
 {
     [Header("Scene Setup")]
-    [SerializeField] private Object startScene;
+    [SerializeField] private string startSceneName;
 
     [Header("UI Panels")]
     [SerializeField] private GameObject optionsPanel;
@@ -38,47 +35,29 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (startScene == null)
+        if (string.IsNullOrEmpty(startSceneName))
         {
-            Debug.LogError("Start Scene not assigned in the Inspector!");
+            Debug.LogError("Start Scene Name not assigned!");
             return;
         }
+
         Time.timeScale = 1f;
-#if UNITY_EDITOR
-        string scenePath = AssetDatabase.GetAssetPath(startScene);
-        string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
-        SceneManager.LoadScene(sceneName);
-#else
-        SceneManager.LoadScene(startScene.name);
-#endif
+        SceneManager.LoadScene(startSceneName);
     }
 
     public void QuitGame()
     {
         Debug.Log("Quitting game from Main Menu...");
         Time.timeScale = 1f;
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
         Application.Quit();
-#endif
     }
 
-    public void OpenOptions()
-    {
-        SetOptionsVisible(true);
-    }
+    public void OpenOptions() => SetOptionsVisible(true);
+    public void CloseOptions() => SetOptionsVisible(false);
 
-    public void CloseOptions()
-    {
-        SetOptionsVisible(false);
-    }
-
-    public void SetOptionsVisible(bool isVisible)
+    private void SetOptionsVisible(bool visible)
     {
         if (optionsPanel != null)
-        {
-            optionsPanel.SetActive(isVisible);
-        }
+            optionsPanel.SetActive(visible);
     }
 }

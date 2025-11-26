@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f10c2c02d64ef034795cb3124ed43e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuManager
-  startScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+  startSceneName: Upper Class Level
   optionsPanel: {fileID: 921086333}
   startButton: {fileID: 424597080}
   optionsButton: {fileID: 838845170}
@@ -675,7 +675,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 52297780}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: OnStartButtonClicked
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
